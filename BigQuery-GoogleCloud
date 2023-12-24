@@ -1,0 +1,90 @@
+First I uploaded the 4 different file.Then I decided to use SQL Query to  clean and manipulate data such as removing null, duplicate, removing unused column and combined table using Null.
+
+-- Display data before dropping columns
+SELECT *
+FROM `capstone-project-406618.CyclistData.Juntrip4`;
+
+-- Drop multiple columns from Juntrip4
+ALTER TABLE `capstone-project-406618.CyclistData.Juntrip4`
+DROP COLUMN start_station_name,
+DROP COLUMN start_station_id,
+DROP COLUMN end_station_name,
+DROP COLUMN end_station_id,
+DROP COLUMN start_lat,
+DROP COLUMN start_lng,
+DROP COLUMN end_lat,
+DROP COLUMN end_lng;
+
+-- Display data after dropping columns
+SELECT *
+FROM `capstone-project-406618.CyclistData.Juntrip4`;
+
+
+
+-- Display data NULL
+SELECT ride_id,rideable_type,started_at,ended_at,member_casual
+FROM `capstone-project-406618.CyclistData.Juntrip4`
+WHERE
+  ride_id IS NULL OR
+  rideable_type IS NULL OR
+  started_at IS NULL OR
+  ended_at IS NULL OR
+  member_casual IS NULL;
+
+SELECT DISTINCT ride_id,rideable_type,started_at,ended_at,member_casual
+FROM `capstone-project-406618.CyclistData.Juntrip4` 
+
+
+
+-- Create a new table with the additional column
+CREATE TABLE `capstone-project-406618.CyclistData.Juntrip4_with_duration` AS
+SELECT
+  ride_id,
+  rideable_type,
+  started_at,
+  ended_at,
+  member_casual,
+  CAST(TIMESTAMP_DIFF(ended_at, started_at, SECOND) AS INT64) AS duration_seconds
+FROM
+  `capstone-project-406618.CyclistData.Juntrip4`;
+
+
+
+-- Create a new table and combine data using UNION ALL
+CREATE TABLE `capstone-project-406618.CyclistData.Combined_table`
+AS
+SELECT * FROM `capstone-project-406618.CyclistData.Augtrip7_with_duration`
+UNION ALL
+SELECT * FROM `capstone-project-406618.CyclistData.Julytrip6_with_duration`
+UNION ALL
+SELECT * FROM `capstone-project-406618.CyclistData.Juntrip5_with_duration`
+UNION ALL
+SELECT * FROM `capstone-project-406618.CyclistData.Juntrip4_with_duration`;
+
+
+
+
+  -- Get statistics on the combined table
+WITH CombinedTable AS (
+  SELECT * FROM `capstone-project-406618.CyclistData.Augtrip7_with_duration`
+  UNION ALL
+  SELECT * FROM `capstone-project-406618.CyclistData.Julytrip6_with_duration`
+  UNION ALL
+  SELECT * FROM `capstone-project-406618.CyclistData.Juntrip5_with_duration`
+  UNION ALL
+  SELECT * FROM `capstone-project-406618.CyclistData.Juntrip4_with_duration`
+)
+
+-- Calculate statistics
+SELECT
+  COUNT(*) AS total_rows,
+  COUNT(DISTINCT ride_id) AS distinct_values,
+  MAX(duration_seconds) AS maximum_value,
+  MIN(duration_seconds) AS minimum_value,
+  AVG(duration_seconds) AS mean_value
+FROM
+  CombinedTable;
+
+
+
+

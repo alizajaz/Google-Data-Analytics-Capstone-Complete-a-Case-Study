@@ -3,6 +3,7 @@ library(dplyr)
 library(readr)
 combined_datas <- read_csv("combined_datas.csv")
 View(combined_datas)
+
 install.packages("tidyverse")
 library(tidyverse)
 install.packages("dplyr")

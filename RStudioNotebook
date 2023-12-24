@@ -1,8 +1,3 @@
-combinedata %>% arrange (-started_at)
-combinedata %>% arrange(-started_at)
-combinedata %>% arrange(-started_at)
-combinedata %>% arrange(-started_at)
-combinedata %>% arrange(-started_at)
 install.packages("dplyr")
 library("dplyr")
 combinedata %>% arrange(-started_at)

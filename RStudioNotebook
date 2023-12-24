@@ -1,0 +1,304 @@
+combinedata %>% arrange (-started_at)
+combinedata %>% arrange(-started_at)
+combinedata %>% arrange(-started_at)
+combinedata %>% arrange(-started_at)
+combinedata %>% arrange(-started_at)
+install.packages("dplyr")
+library("dplyr")
+combinedata %>% arrange(-started_at)
+combinedata %>% arrange(started_at)
+combinedata %>% arrange(started_at)
+install.packages("dplyr")
+install.packages("dplyr")
+library(dbplyr)
+combinedata %>% arrange(started_at)
+install.packages("dplyr")
+install.packages("dplyr")
+library(dplyr)
+class(combinedata)
+> combined_datas <- unique(combined_datas)
+The following objects are masked from ‘package:base’:
+>
+install.packages("dplyr")
+library(readr)
+combined_datas <- read_csv("combined_datas.csv")
+View(combined_datas)
+install.packages("tidyverse")
+library(tidyverse)
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("janitor")
+library(janitor)
+install.packages("libridate")
+library(libridate)
+install.packages("lubridate")
+install.packages("lubridate")
+library(lubridate)
+install.packages("ggplot2")
+library(ggplot2)
+getwd()
+library(readr)
+combined_datas <- read_csv("combined_datas.csv")
+View(combined_datas)
+combined_datas <- combined_datas %>%
+select(-c(start_lat, start_lng, end_lat, end_lng))
+install.packages("dplyr")
+install.packages("dplyr")
+library(dbplyr)
+combined_datas <- combined_datas %>%
++     select(-c(start_lat, start_lng, end_lat, end_lng))
+columns_to_remove <- c("start_lat", "start_lng", "end_lat", "end_lng")
+combined_datas <- combined_datas %>%
+select(-columns_to_remove)
+View(combined_datas)
+library(dplyr)
+columns_to_remove <- c("start_station_name", "start_station_id,end_station_name,end_station_id,start_lat,start_lng,end_lat,end_lng")
+View(combined_datas)
+columns_to_remove <- c("start_station_name", "start_station_id", "end_station_name", "end_station_id", "start_lat", "start_lng", "end_lat", "end_lng")
+library(dplyr)
+combined_datas <- combined_datas %>%
+select(-one_of(columns_to_remove))
+View(combined_datas)
+your_data$ride_id <- as.character(your_data$ride_id)
+combined_datas <-  mutate(combined_datas, ride_id = as.character(ride_id),rideable_type = as.character(rideable_type))
+colnames(combined_datas)
+nrow(combined_datas)
+dim(combined_datas)
+head(combined_datas)
+str(combined_datas)
+summary(combined_datas)
+combined_datas <- combined_datas %>%
+mutate(member_casual = recode(member_casual, "Subscriber" = "member", "Customer" = "casual"))
+library(dplyr)
+view(combined_datas)
+View(combined_datas)
+library(dplyr)
+combined_datas <- combined_datas %>%
+mutate(member_casual = recode(member_casual, "member" = "Subscriber", "Customer" = "casual"))
+library(dplyr)
+library(lubridate)
+combined_dates$started_at <- as.POSIXct(combined_dates$started_at, format="%Y-%m-%d %H:%M:%S")
+combined_datas$started_at <- as.POSIXct(combined_datas$started_at, format="%Y-%m-%d %H:%M:%S")
+combined_datas$ended_at <- as.POSIXct(combined_datas$ended_at, format="%Y-%m-%d %H:%M:%S")
+combined_datas$ride_length <- combined_datas$ended_at - combined_datas$started_at
+combined_datas$ride_length_seconds <- as.numeric(combined_datas$ride_length, units="secs")
+print(head(combined_datas))
+has_negative_values <- any(combined_datas$ride_length_seconds < 0)
+if (has_negative_values) {
+cat("The 'ride_length_seconds' column has negative values.\n")
+} else {
+cat("The 'ride_length_seconds' column does not have negative values.\n")
+}
+mbined_datas <- combined_datas[combined_datas$ride_length_seconds >= 0, ]
+combined_datas <- combined_datas[combined_datas$ride_length_seconds >= 0, ]
+print(head(combined_datas))
+table(combined_datas$member_casual)
+combined_datas$date <- as.Date(all_trips$started_at)
+combined_datas$date <- as.Date(combined_datas$started_at)
+combined_datas$month <- format(as.Date(combined_datas$date), "%m")
+combined_datas$day <- format(as.Date(combined_datas$date), "%d")
+combined_datas$year <- format(as.Date(combined_datas$date), "%Y")
+combined_datas$day_of_week <- format(as.Date(combined_datas$date), "%A")
+combined_datas$ride_length <- difftime(combined_datas$ended_at,combined_datas$started_at)
+str(combined_datas)
+combined_datas$ride_length <- as.numeric(as.character(combined_datas$ride_length))
+is.numeric(combined_datas$ride_length)
+combined_datas_v2 <- combined_datas[!(combined_datas$start_station_name == "HQ QR" | combined_datas$ride_length<0),]
+mean(combined_datas_v2$ride_length)
+mean(combined_datas$ride_length)
+mean(combined_datas$ride_length_seconds)
+median(combined_datas$ride_length)
+max(combined_datas$ride_length)
+min(combined_datas$ride_length)
+summary(combined_datas$ride_length)
+aggregate(combined_datas$ride_length ~ combined_datas$member_casual, FUN = mean)
+aggregate(combined_datas$ride_length ~ combined_datas$member_casual, FUN = median)
+aggregate(combined_datas$ride_length ~ combined_datas$member_casual, FUN = max)
+aggregate(combined_datas$ride_length ~ combined_datas$member_casual, FUN = min)
+aggregate(combined_datas$ride_length ~ combined_datas$member_casual + combined_datas$day_of_week, FUN = mean)
+Notice that the days of the week are out of order. Let's fix that.
+combined_datas$day_of_week <- ordered(combined_datas$day_of_week, levels=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+aggregate(combined_datas$ride_length ~ combined_datas$member_casual + combined_datas$day_of_week, FUN = mean)
+combined_datas %>%
+mutate(weekday = wday(started_at, label = TRUE)) %>%  #creates weekday field using wday()
+group_by(member_casual, weekday) %>%  #groups by usertype and weekday
+summarise(number_of_rides = n()							#calculates the number of rides and average duration
+,average_duration = mean(ride_length)) %>% 		# calculates the average duration
+arrange(member_casual, weekday)								# sorts
+combined_datas %>%
+mutate(weekday = wday(started_at, label = TRUE)) %>%
+group_by(member_casual, weekday) %>%
+summarise(number_of_rides = n()
+,average_duration = mean(ride_length)) %>%
+arrange(member_casual, weekday)  %>%
+ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) +
+geom_col(position = "dodge")
+install.packages("ggplot2")
+library(ggplot2)
+combined_datas %>%
+mutate(weekday = wday(started_at, label = TRUE)) %>%
+group_by(member_casual, weekday) %>%
+summarise(number_of_rides = n()
+,average_duration = mean(ride_length)) %>%
+arrange(member_casual, weekday)  %>%
+ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) +
+geom_col(position = "dodge")
+combined_datas %>%
+mutate(weekday = wday(started_at, label = TRUE)) %>%
+group_by(member_casual, weekday) %>%
+summarise(number_of_rides = n()
+,average_duration = mean(ride_length)) %>%
+arrange(member_casual, weekday)  %>%
+ggplot(aes(x = weekday, y = average_duration, fill = member_casual)) +
+geom_col(position = "dodge")
+counts <- aggregate(combined_data$ride_length ~ combined_datas$member_casual + combined_datas$day_of_week, FUN = mean)
+counts <- aggregate(combined_data$ride_length ~ combined_datas$member_casual + combined_datas$day_of_week, FUN = mean)
+counts <- aggregate(combined_datas$ride_length ~ combined_datas$member_casual + combined_datas$day_of_week, FUN = mean)
+write.csv(counts, file = '~/Desktop/Divvy_Exercise/avg_ride_length.csv')
+write.csv(counts, file = "C:\Users\Admin\Desktop\Google Certificate\google certificate\New folder\TripData\csvfile\avg_ride_length.csv")
+write.csv(counts, file = "C:/Users/Admin/Desktop/Google Certificate/google certificate/New folder/TripData/csvfile/avg_ride_length.csv")
+dir.create("C:/Users/Admin/Desktop/Google Certificate/google certificate/New folder/TripData/csvfile/", recursive = TRUE)
+output_dir <- "C:/Users/Admin/Desktop/Google Certificate/google certificate/New folder/TripData/csvfile/"
+if (!dir.exists(output_dir)) {
+dir.create(output_dir, recursive = TRUE)
+}
+write.csv(counts, file = paste0(output_dir, "avg_ride_length.csv"))
+install.packages("ggplot2")
+install.packages("ggplot2")
+combined_datas %>%
+mutate(weekday = wday(started_at, label = TRUE)) %>%
+group_by(member_casual, weekday) %>%
+summarise(number_of_rides = n(),
+total_duration = sum(ride_length),
+average_duration = mean(ride_length)) %>%
+group_by(member_casual) %>%
+summarise(total_rides = sum(number_of_rides),
+total_duration = sum(total_duration),
+average_ride_duration = total_duration / total_rides) %>%
+ggplot(aes(x = member_casual, y = average_ride_duration, fill = member_casual)) +
+geom_col() +
+labs(title = "Average Ride Duration in a Year",
+x = "Member Type",
+y = "Average Ride Duration")
+combined_datas %>%
+mutate(weekday = wday(started_at, label = TRUE)) %>%
+group_by(member_casual, weekday) %>%
+summarise(number_of_rides = n()) %>%
+group_by(member_casual) %>%
+summarise(total_rides = sum(number_of_rides)) %>%
+ggplot(aes(x = member_casual, y = total_rides, fill = member_casual)) +
+geom_col() +
+labs(title = "Total Number of Rides in a Year",
+x = "Member Type",
+y = "Total Number of Rides")
+combined_datas %>%
+mutate(started_at = as.POSIXct(started_at)) %>%
+group_by(member_casual, rideable_type, date = as.Date(started_at)) %>%
+summarise(number_of_rides = n()) %>%
+group_by(member_casual, rideable_type) %>%
+summarise(avg_rides_per_day = mean(number_of_rides),
+max_avg_rides_per_day = max(avg_rides_per_day)) %>%
+group_by(member_casual, rideable_type, week = lubridate::week(date),
+month = lubridate::floor_date(date, "month"),
+year = lubridate::year(date)) %>%
+summarise(avg_rides_per_week = mean(avg_rides_per_day),
+avg_rides_per_month = mean(avg_rides_per_day),
+avg_rides_per_year = mean(avg_rides_per_day),
+max_avg_rides_per_week = max(avg_rides_per_week),
+max_avg_rides_per_month = max(avg_rides_per_month),
+max_avg_rides_per_year = max(avg_rides_per_year)) %>%
+ggplot(aes(x = rideable_type, y = max_avg_rides_per_week, fill = member_casual)) +
+geom_col(position = "dodge") +
+labs(title = "Maximum Average Rides in a Week",
+x = "Rideable Type",
+y = "Max Average Rides",
+fill = "Member Type")
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+combined_datas %>%
+mutate(started_at = as.POSIXct(started_at)) %>%
+group_by(member_casual, rideable_type, date = as.Date(started_at)) %>%
+summarise(number_of_rides = n()) %>%
+group_by(member_casual, rideable_type) %>%
+summarise(avg_rides_per_day = mean(number_of_rides),
+max_avg_rides_per_day = max(avg_rides_per_day)) %>%
+group_by(member_casual, rideable_type, week = week(started_at),
+month = floor_date(started_at, "month"),
+year = year(started_at)) %>%
+summarise(avg_rides_per_week = mean(avg_rides_per_day),
+avg_rides_per_month = mean(avg_rides_per_day),
+avg_rides_per_year = mean(avg_rides_per_day),
+max_avg_rides_per_week = max(avg_rides_per_week),
+max_avg_rides_per_month = max(avg_rides_per_month),
+max_avg_rides_per_year = max(avg_rides_per_year)) %>%
+ggplot(aes(x = rideable_type, y = max_avg_rides_per_week, fill = member_casual)) +
+geom_col(position = "dodge") +
+labs(title = "Maximum Average Rides in a Week",
+x = "Rideable Type",
+y = "Max Average Rides",
+fill = "Member Type")
+combined_datas %>%
+mutate(started_at = as.POSIXct(started_at),
+month = floor_date(started_at, "month"),
+day = as.Date(started_at),
+year = year(started_at)) %>%
+group_by(rideable_type, month, day, year) %>%
+summarise(avg_rides_per_day = mean(ride_length),
+total_ride_length = sum(ride_length)) %>%
+ggplot(aes(x = day, y = avg_rides_per_day, fill = rideable_type)) +
+geom_col(position = "dodge") +
+labs(title = "Average Rides and Total Ride Lengths",
+x = "Day",
+y = "Average Rides",
+fill = "Rideable Type") +
+facet_wrap(~month, scales = "free_x", ncol = 3) +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+combined_datas %>%
+mutate(started_at = as.POSIXct(started_at),
+month = floor_date(started_at, "month"),
+day = as.Date(started_at),
+year = year(started_at)) %>%
+group_by(member_casual, month, day, year) %>%
+summarise(avg_ride_length_per_day = mean(ride_length),
+total_ride_length = sum(ride_length)) %>%
+ggplot(aes(x = day, y = avg_ride_length_per_day, color = member_casual)) +
+geom_line() +
+labs(title = "Average Ride Lengths for Member Types",
+x = "Day",
+y = "Average Ride Length",
+color = "Member Type") +
+facet_wrap(~month, scales = "free_x", ncol = 3) +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+combined_datas %>%
+mutate(started_at = as.POSIXct(started_at),
+month = floor_date(started_at, "month")) %>%
+group_by(member_casual, month) %>%
+summarise(avg_ride_length_per_month = mean(ride_length),
+total_ride_length = sum(ride_length)) %>%
+ggplot(aes(x = month, y = avg_ride_length_per_month, color = member_casual)) +
+geom_line() +
+labs(title = "Average Ride Lengths for Member Types by Month",
+x = "Month",
+y = "Average Ride Length",
+color = "Member Type") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+max_ride_length = df['ride_length'].max()
+library(ggplot2)
+max_ride_length <- max(ride_lengths)
+max_ride_length <- max(ride_lengths_seconds)
+combined_datas %>%
+mutate(started_at = as.POSIXct(started_at),
+month = floor_date(started_at, "month")) %>%
+group_by(member_casual, month) %>%
+summarise(avg_ride_length_per_month = mean(ride_length),
+total_ride_length = sum(ride_length),
+max_ride_length = max(ride_length)) %>%
+ggplot(aes(x = month, y = avg_ride_length_per_month, color = member_casual)) +
+geom_line() +
+geom_point(aes(y = max_ride_length), shape = 18, size = 3, color = "red", show.legend = FALSE) +  # Add red points for max ride length
+labs(title = "Average Ride Lengths and Max Ride Lengths for Member Types by Month",
+x = "Month",
+y = "Average Ride Length",
+color = "Member Type") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
